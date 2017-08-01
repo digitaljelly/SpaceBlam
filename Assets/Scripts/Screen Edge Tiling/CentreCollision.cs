@@ -1,0 +1,90 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+/*
+	CentreCollision.cs
+	Destroys lasers outside the screen
+	If an object goes off-screen, we snap it back to a corresponding position on the opposite side
+	If its an asteroid that hasn't been tiled, tile it
+*/
+
+
+public class CentreCollision : MonoBehaviour
+{
+
+	ScreenTilingCtrl tilingCtrl;
+
+	void Start ()
+	{
+		GameObject gameController = GameObject.FindGameObjectWithTag ("GameController");
+		tilingCtrl = gameController.GetComponent<ScreenTilingCtrl> ();
+	}
+
+	void OnTriggerEnter2D (Collider2D collider)
+	{
+		ObjectTilingCtrl tile = collider.GetComponent<ObjectTilingCtrl> ();
+		if (collider.tag == "Asteroid" && tile == null)
+		{
+			// This is an untiled asteroid, so tile it
+			tilingCtrl.TileAnObject (collider.gameObject);
+		}
+	}
+
+
+	void OnTriggerExit2D (Collider2D collider)
+	{
+		// Kill all lasers exiting the screen area
+		if (collider.tag == "Laser")
+		{
+			Destroy (collider.gameObject);
+			return;
+		}
+
+		// Now we need to snap asteroids and players to their opposite edge
+		// this should happen seamlessly
+		ObjectTilingCtrl tile = collider.GetComponent<ObjectTilingCtrl> ();
+		if (tile && tile.isOriginal)
+		{
+			
+			// I like to keep camera positoning dynamic where possible, so its easier to add flexibility to resize the screen
+			Vector3 pos = collider.transform.position;
+			Camera cam = Camera.main;
+
+			// Get screen edges in world-space
+			Vector3 bottomLeft = cam.ScreenToWorldPoint (Vector3.zero);
+			Vector3 topRight = cam.ScreenToWorldPoint (new Vector3 (cam.pixelWidth, cam.pixelHeight, 1f));
+
+			float x = 0f;
+			float y = 0f;
+			if (pos.x < bottomLeft.x)
+			{
+				x = topRight.x - bottomLeft.x;
+			} 
+			else if (pos.x > topRight.x)
+			{
+				x = -(topRight.x - bottomLeft.x);
+			}
+
+			if (pos.y < bottomLeft.y)
+			{
+				y = topRight.y - bottomLeft.y;
+			}
+			else if (pos.y > topRight.y)
+			{
+				y = -(topRight.y - bottomLeft.y);
+			}
+
+			Vector3 offset = new Vector3 (x, y, 0f);
+
+			List<GameObject> sameTagAsOriginal = new List<GameObject> (GameObject.FindGameObjectsWithTag (collider.tag));
+			foreach (GameObject matchingTag in sameTagAsOriginal)
+			{
+				if (matchingTag.name == collider.name)
+				{
+					matchingTag.transform.position += offset;
+				}
+			}
+		}
+	}
+
+}

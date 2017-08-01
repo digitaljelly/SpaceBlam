@@ -1,0 +1,56 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+/*
+	BGMusicControl.cs
+	Controls the BG music
+*/
+
+[RequireComponent(typeof(AudioSource))]
+public class BGMusicControl : MonoBehaviour {
+	[SerializeField]
+	AudioClip mainTheme;
+	
+	[SerializeField]
+	AudioClip gameTheme;
+	
+	AudioSource aSource;
+	
+	void Start(){
+		aSource = GetComponent<AudioSource>();
+		MainTheme();
+	}
+
+	void Awake() {
+		DontDestroyOnLoad(transform.gameObject);
+	}
+	
+	public void MainTheme(){
+		aSource.clip = mainTheme;
+		aSource.Play();
+	}
+	
+	public void GameTheme(){
+		aSource.clip = mainTheme;
+		aSource.Play();
+	}
+	
+	// Delegate that fires on level change, so we know what music to play
+	void OnEnable() {
+		SceneManager.sceneLoaded += ExampleSceneHasLoaded;
+	}
+
+	void OnDisable() {
+		SceneManager.sceneLoaded -= ExampleSceneHasLoaded;
+	}
+
+	void ExampleSceneHasLoaded(Scene scene, LoadSceneMode mode) {
+		string sceneName = scene.name;
+		if(sceneName == "Main Game"){
+			GameTheme();
+		}else{
+			MainTheme();
+		}
+	}
+}

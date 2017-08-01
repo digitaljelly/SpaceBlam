@@ -1,0 +1,58 @@
+using UnityEngine;
+using System.Collections;
+/*
+	SpaceBlamSettings.cs
+	Universal game settings
+*/
+
+
+[CreateAssetMenu(fileName = "Data", menuName = "SpaceBlam/Settings", order = 1)]
+public class SpaceBlamSettings : ScriptableObject{
+	
+	[Header("Asteroid Settings")]
+	public float asteroidLargeHealth = 100f;
+	public float asteroidMediumHealth = 66f;
+	public float asteroidSmallHealth = 33f;
+	public int maximumCompleteAsteroids = 3;
+	public GameObject largeAsteroid;
+	public GameObject mediumAsteroid;
+	public GameObject smallAsteroid;
+	public int smallerAsteroidsSpawnedOnKill = 2;
+	public float asteroidSpawnForce = 10f;
+	[Range(0f,10f)]
+	public float asteroidLargeShieldUpInterval = 3f;
+	[Range(0f,10f)]
+	public float asteroidMediumShieldUpInterval = 2f;
+	[Range(0f,10f)]
+	public float asteroidSmallShieldUpInterval = 1f;
+	public float shieldResistance = 40f;
+	
+	[Header("Player Settings")]
+	public float damagerPerHit = 20f;
+	public float shotsPerSecond = 20f; 
+	public float shotsForce = 3f; 
+	public float thursterForce = 10f;
+	public float turnForce = 0.5f;
+	public float maxSpeed = 8f;
+	public Color shipColor1 = Color.red;
+	public Color shipColor2 = Color.blue;
+	
+	[Header("Scoring Settings")]
+	public int highScore = 0;
+	public int pointsPerHit = 10;
+	public int pointsPerLargeDestroyed = 100;
+	public int pointsPerMediumDestroyed = 140;
+	public int pointsPerSmallDestroyed = 175;
+
+	[Header("Sounds")]
+	public AudioClip mainTheme;
+	public AudioClip gameTheme;
+	public AudioClip uIButtonForward;
+	public AudioClip thruster;
+	public AudioClip fireShot;
+	public AudioClip shotHit;
+	public AudioClip shotBounce;
+	public AudioClip asteroidShrink;
+	public GameObject audioPlayerPrefab;
+
+}

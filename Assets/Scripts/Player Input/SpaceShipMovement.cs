@@ -1,0 +1,73 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+/*
+	SpaceShipMovement.cs
+	Controls moving the spaceship. Script should be fairly self-explanatory, so gone comment-lite!
+*/
+
+
+[RequireComponent (typeof(Rigidbody2D))]
+[RequireComponent (typeof(PlayerSounds))]
+[RequireComponent (typeof(ObjectTilingCtrl))]
+public class SpaceShipMovement : MonoBehaviour
+{
+
+	public SpaceBlamSettings settings;
+	public ParticleSystem thrusterParticles;
+
+	Rigidbody2D rb;
+	PlayerSounds pSounds;
+
+	void Start ()
+	{
+		rb = GetComponent<Rigidbody2D> ();
+		ObjectTilingCtrl tilingCtrl = GetComponent<ObjectTilingCtrl> ();
+		if (tilingCtrl && tilingCtrl.isOriginal)
+		{
+			pSounds = GetComponent<PlayerSounds> ();
+		}
+		if (thrusterParticles)
+		{
+			thrusterParticles.Stop ();
+		}
+	}
+
+	List<Rigidbody2D> players = new List<Rigidbody2D> ();
+
+	void FixedUpdate ()
+	{
+		// Removed: moving backwards!
+		if (Input.GetAxis ("Vertical") > 0f)
+		{
+			rb.AddForce (transform.up * settings.thursterForce * Input.GetAxis ("Vertical"));
+			if (pSounds != null && !pSounds.thrustersSource.isPlaying)
+			{
+				pSounds.thrustersSource.Play ();
+			}
+			if (thrusterParticles)
+			{
+				thrusterParticles.Play ();
+			}
+		} else
+		{
+			if (pSounds != null)
+			{
+				pSounds.thrustersSource.Pause ();
+			}
+			if (thrusterParticles)
+			{
+				thrusterParticles.Stop ();
+			}
+		}
+		if (Input.GetAxis ("Horizontal") != 0f)
+		{
+			// Favoured over torque as AddTorque makes the controls far too slippery
+			rb.MoveRotation (rb.rotation + settings.turnForce * Time.deltaTime * -Input.GetAxis ("Horizontal"));
+		}
+		Vector2 clampedSpeed = new Vector2 (rb.velocity.x, Mathf.Clamp (rb.velocity.y, -settings.maxSpeed, settings.maxSpeed));
+		rb.velocity = clampedSpeed;
+
+	}
+
+}

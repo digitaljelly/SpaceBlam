@@ -1,0 +1,42 @@
+﻿using UnityEngine;
+using System.Collections;
+/*
+	LaserBeam.cs
+	Component to control laser behaviour.
+*/
+
+
+[RequireComponent(typeof(Rigidbody2D))]
+public class LaserBeam : MonoBehaviour {
+
+	[HideInInspector]
+	public float shotForce = 3f;
+
+	[SerializeField]
+	float lifeTime = 20f;
+
+	// On spawn, make the beam move!
+	void Start () {
+		GetComponent<Rigidbody2D> ().AddForce (shotForce * transform.up, ForceMode2D.Impulse);
+		StartCoroutine (DestroyAfterTimer ());
+	}
+
+	// Lasers will self-destruct if they go beyond the screen bounds
+	// However, asteroid shields could create lasers that bounce across the screen
+	// for a lot of time, and that could hit performance. We add a max lifetime to combat that
+	IEnumerator DestroyAfterTimer(){
+		yield return new WaitForSeconds (lifeTime);
+		Destroy (gameObject);
+	}
+
+	// Deprecated in favour of a collision bounds on the camera
+	/*
+	void FixedUpdate(){
+		Vector3 gunPos = Camera.main.WorldToViewportPoint(transform.position);
+		if (gunPos.x < 0f || gunPos.x > 1f || gunPos.y < 0f || gunPos.y > 1f) {
+			Destroy (this.gameObject);
+		}
+	}
+	*/
+
+}

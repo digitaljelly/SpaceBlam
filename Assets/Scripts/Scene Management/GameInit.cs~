@@ -1,0 +1,13 @@
+﻿using UnityEngine;
+using System.Collections;
+/*
+	GameInit.cs
+	Used to initiliase the first loading screen, can be used to perform additional tasks later
+*/
+
+public class GameInit : MonoBehaviour {
+
+	void Start(){
+		GameObject.FindGameObjectWithTag
+	}
+}

@@ -1,0 +1,34 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class PlayerSounds : MonoBehaviour {
+
+	public SpaceBlamSettings settings;
+
+	[HideInInspector]
+	public AudioSource thrustersSource;
+	[HideInInspector]
+	public AudioSource gunSource;
+	[HideInInspector]
+	public AudioSource explosionSource;
+
+	// Use this for initialization
+	void Start () {
+		thrustersSource = gameObject.AddComponent<AudioSource> ();
+		gunSource = gameObject.AddComponent<AudioSource> ();
+		explosionSource = gameObject.AddComponent<AudioSource> ();
+
+		thrustersSource.clip = settings.thruster;
+		gunSource.clip = settings.fireShot;
+		explosionSource.clip = settings.asteroidShrink;
+
+		thrustersSource.loop = true;
+		explosionSource.loop = false;
+
+		thrustersSource.playOnAwake = false;
+		gunSource.playOnAwake = false;
+		explosionSource.playOnAwake = false;
+
+	}
+
+}

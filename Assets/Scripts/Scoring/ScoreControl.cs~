@@ -1,0 +1,44 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+/*
+	ScoreControl.cs
+	Controls loading/saving/updating the score
+*/
+
+
+public class ScoreControl : MonoBehaviour {
+
+	public SpaceBlamSettings settings;
+	public int currentScore;
+	public Text currentScoreText;
+	public Text highScoreText;
+	public bool newHighScore = false;
+
+	void Start(){
+		UpdateHighScore ();
+	}
+
+	public void AddPoints(int points){
+		currentScore += points;
+		UpdateCurrentScore ();
+		if (currentScore > settings.highScore) {
+			settings.highScore = currentScore;
+			newHighScore = true;
+			UpdateHighScore ();
+		}
+	}
+
+	// Pad the scores with leading digits (8 digits max)
+	void UpdateCurrentScore(){
+		if(currentScoreText)
+			currentScoreText.text = currentScore.ToString ("D8");
+	}
+
+	void UpdateHighScore(){
+		if(highScoreText)
+			highScoreText.text = settings.highScore.ToString ("D8");
+	}
+
+
+}

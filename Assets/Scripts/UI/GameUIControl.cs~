@@ -1,0 +1,79 @@
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+/*
+	GameUIControl.cs
+	Controls the start and end- game UIs
+*/
+
+
+public class GameUIControl : MonoBehaviour {
+
+	public GameObject infoPanel;
+	public GameObject endPanel;
+	public GameObject highScoreNotification;
+	public ScoreControl scoreCtrl;
+
+	public void StartGame(){
+		infoPanel.SetActive (false);
+		List<GameObject> players = new List<GameObject> (GameObject.FindGameObjectsWithTag ("Player"));
+		foreach (GameObject player in players) {
+			FireShots playerFireShots = player.GetComponent<FireShots> ();
+			Rigidbody2D playerRB = player.GetComponent<Rigidbody2D> ();
+			SpaceShipMovement playerMovement = player.GetComponent<SpaceShipMovement> ();
+			if (playerFireShots)
+				playerFireShots.enabled = true;
+			if (playerRB)
+				playerRB.WakeUp ();
+			if (playerMovement)
+				playerMovement.enabled = true;
+		}
+		GameState.currentState = GameState.AvailableStates.Playing;
+	}
+
+	// Use this for initialization
+	void Start () {
+		// We instantiate lots of players for tiling, we need to set them all
+		List<GameObject> players = new List<GameObject> (GameObject.FindGameObjectsWithTag ("Player"));
+		foreach (GameObject player in players) {
+			FireShots playerFireShots = player.GetComponent<FireShots> ();
+			Rigidbody2D playerRB = player.GetComponent<Rigidbody2D> ();
+			SpaceShipMovement playerMovement = player.GetComponent<SpaceShipMovement> ();
+
+			if (playerFireShots)
+				playerFireShots.enabled = false;
+			if (playerRB)
+				playerRB.Sleep ();
+			if (playerMovement)
+				playerMovement.enabled = false;
+		}
+	}
+
+	public void End(){
+		// We instantiate lots of players for tiling, we need to set them all
+		List<GameObject> players = new List<GameObject> (GameObject.FindGameObjectsWithTag ("Player"));
+		foreach (GameObject player in players) {
+			FireShots playerFireShots = player.GetComponent<FireShots> ();
+			Rigidbody2D playerRB = player.GetComponent<Rigidbody2D> ();
+			SpaceShipMovement playerMovement = player.GetComponent<SpaceShipMovement> ();
+			
+			if (playerFireShots)
+				playerFireShots.enabled = false;
+			if (playerRB)
+				playerRB.Sleep ();
+			if (playerMovement)
+				playerMovement.enabled = false;
+		}
+		if (scoreCtrl.newHighScore && scoreCtrl.currentScore > 0) {
+			highScoreNotification.SetActive (true);
+		}
+		endPanel.SetActive (true);
+		GameState.currentState = GameState.AvailableStates.Ended;
+	}
+
+	public void Restart(){
+		GameState.currentState = GameState.AvailableStates.MainGameStart;
+		SceneManager.LoadScene ("Main Game");
+	}
+}

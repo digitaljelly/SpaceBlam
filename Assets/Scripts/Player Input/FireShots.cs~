@@ -1,0 +1,56 @@
+﻿using UnityEngine;
+using System.Collections;
+/*
+	FireShots.cs
+	Controls player shooting
+*/
+
+
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(ObjectTilingCtrl))]
+[RequireComponent(typeof(PlayerSounds))]
+public class FireShots : MonoBehaviour {
+
+	public SpaceBlamSettings settings;
+
+	float shotsPerSecond = 2f;
+	float shotForce = 3f;
+	public GameObject projectilePrefab;
+	public Transform projectileSpawnPoint;
+	bool canFire = true;
+	Rigidbody2D rb;
+	PlayerSounds pSounds;
+
+	void Start(){
+		shotsPerSecond = settings.shotsPerSecond;
+		shotForce = settings.shotsForce;
+		ObjectTilingCtrl tilingCtrl = GetComponent<ObjectTilingCtrl> ();
+		if (tilingCtrl.isOriginal) {
+			pSounds = GetComponent<PlayerSounds> ();
+		}
+	}
+
+	void FixedUpdate () {
+		// A check to prevent firing outside play area
+		Vector3 gunPos = Camera.main.WorldToViewportPoint(projectileSpawnPoint.position);
+		if (gunPos.x < 0f || gunPos.x > 1f || gunPos.y < 0f || gunPos.y > 1f) {
+			return;
+		}
+		if (Input.GetButton("Jump") && canFire) {
+			canFire = false;
+			GameObject laser = Instantiate (projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation) as GameObject;
+
+			// this could be hard-coded into LaserBeam, but leaving it here gives me the option to add in some more gameplay features later
+			LaserBeam laserBeam = laser.GetComponent<LaserBeam> ();
+			laserBeam.shotForce = shotForce;
+			pSounds.gunSource.Play ();
+			StartCoroutine (WaitForNextShot());
+		}
+	}
+
+	// Simply delays firing each shot until time has elapsed
+	IEnumerator WaitForNextShot(){
+		yield return new WaitForSeconds (1f / shotsPerSecond);
+		canFire = true;
+	}
+}

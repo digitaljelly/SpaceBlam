@@ -1,0 +1,8 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class CustomRigidBody2D : Rigidbody2D {
+
+	public Vector2 previousVelocity;
+
+}

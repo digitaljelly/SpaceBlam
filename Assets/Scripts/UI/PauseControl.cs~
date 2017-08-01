@@ -1,0 +1,128 @@
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+/*
+	PauseControl.cs
+	Controls pausing the game
+*/
+
+
+public class PauseControl : MonoBehaviour {
+
+	// The UI panel to show/hide on pause
+	public GameObject pausePanel;
+
+	// Define some variables we can re-use to save memory
+	List<GameObject> objectsToDisable = new List<GameObject>();
+	Dictionary<Rigidbody2D, Vector2> previousVelocities = new Dictionary<Rigidbody2D, Vector2>();
+	Rigidbody2D rb;
+	Collider2D coll;
+	Asteroid asteroidScript;
+	FireShots fireShotScript;
+	SpaceShipMovement moveScript;
+	IncomingAsteroid incomingAsteroid;
+
+	// These are pretty heavy methods to call, fortunately, we only do it once per pause/resume
+	public void PauseGame(){
+		SetComponentStats(false);
+		GameState.currentState = GameState.AvailableStates.Paused;
+	}
+
+	void SetComponentStats(bool state = true){
+
+		pausePanel.SetActive(!state);
+		// If we're pausing, clear the rigidbody's dictionary so we can store all the latest velocities for un-pausing
+		if (!state) {
+			previousVelocities = new Dictionary<Rigidbody2D, Vector2> ();
+		}
+		objectsToDisable = new List<GameObject>(GameObject.FindGameObjectsWithTag("Asteroid"));
+		objectsToDisable.AddRange (GameObject.FindGameObjectsWithTag ("IncomingAsteroid"));
+		foreach(GameObject asteroid in objectsToDisable){
+			rb = asteroid.GetComponent<Rigidbody2D>();
+			coll = asteroid.GetComponent<Collider2D>();
+			asteroidScript = asteroid.GetComponent<Asteroid>();
+			incomingAsteroid = asteroid.GetComponent<IncomingAsteroid>();
+			if(rb) {
+				if(state == true){
+					rb.WakeUp();
+					if(previousVelocities.ContainsKey(rb)){
+						rb.velocity = previousVelocities[rb];
+					}
+				}else{
+					previousVelocities[rb] = rb.velocity;
+					rb.Sleep();
+				}
+			}
+			if(coll) coll.enabled = state;
+			if(asteroidScript) asteroidScript.enabled = state;
+			if(incomingAsteroid) incomingAsteroid.enabled = state;
+		}
+
+		// TODO: could be cached as players should always be visible
+		objectsToDisable = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+
+		foreach(GameObject player in objectsToDisable){
+			rb = player.GetComponent<Rigidbody2D>();
+			coll = player.GetComponent<Collider2D>();
+			fireShotScript = player.GetComponent<FireShots>();
+			moveScript = player.GetComponent<SpaceShipMovement>();
+			if(rb) {
+				if(state == true){
+					rb.WakeUp();
+					if(previousVelocities.ContainsKey(rb)){
+						rb.velocity = previousVelocities[rb];
+					}
+				}else{
+					previousVelocities[rb] = rb.velocity;
+					rb.Sleep();
+				}
+			}
+			if(coll) coll.enabled = state;
+			if(fireShotScript) fireShotScript.enabled = state;
+			if(moveScript) moveScript.enabled = state;
+		}
+
+		objectsToDisable = new List<GameObject>(GameObject.FindGameObjectsWithTag("Laser"));
+		foreach(GameObject laser in objectsToDisable){
+			rb = laser.GetComponent<Rigidbody2D>();
+			coll = laser.GetComponent<Collider2D>();
+			if(rb) {
+				if(state == true){
+					rb.WakeUp();
+					if(previousVelocities.ContainsKey(rb)){
+						rb.velocity = previousVelocities[rb];
+					}
+				}else{
+					previousVelocities[rb] = rb.velocity;
+					rb.Sleep();
+				}
+			}
+			if(coll) coll.enabled = state;
+		}
+	}
+
+	public void ResumeGame(){
+		SetComponentStats(true);
+		GameState.currentState = GameState.AvailableStates.Playing;
+	}
+
+	void Start(){
+		if(!pausePanel){
+			Debug.LogError("No pause panel found, please add one");
+		}
+	}
+
+	void Update(){
+		// Look for input
+		// Use pausePanel's active state to determine paused state - less likely to get out of sync that way
+		if(Input.GetButtonDown("Cancel")){
+			if(GameState.currentState == GameState.AvailableStates.Paused){
+				ResumeGame ();
+			}else if(GameState.currentState == GameState.AvailableStates.Playing){
+				PauseGame ();
+			}
+		}
+	}
+
+}

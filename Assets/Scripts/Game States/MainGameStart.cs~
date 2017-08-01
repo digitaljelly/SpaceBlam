@@ -1,0 +1,32 @@
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+/*
+	MainGameStart.cs
+	Instantiates the player properly. 
+	Provides a convenient function to find all player Rigidbod2Ds if needed
+	Doesn't do anything else yet, could be expanded if needed.
+*/
+
+
+public class MainGameStart : MonoBehaviour {
+
+	public GameObject playerPrefab;
+
+	// Use this for initialization
+	void Awake () {
+		Instantiate (playerPrefab, new Vector3 (0f, 0f, 0f), Quaternion.identity);
+	}
+
+	public List<Rigidbody2D> GetPlayers(){
+		List<GameObject> playerObjs = new List<GameObject> (GameObject.FindGameObjectsWithTag ("Player"));
+		List<Rigidbody2D> rbs = new List<Rigidbody2D>();
+		foreach (GameObject player in playerObjs) {
+			Rigidbody2D rb = player.GetComponent<Rigidbody2D> ();
+			if (rb) {
+				rbs.Add (rb);
+			}
+		}
+		return rbs;
+	}
+}

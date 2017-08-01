@@ -1,0 +1,20 @@
+﻿using UnityEngine;
+using System.Collections;
+/*
+	Scanlines.cs
+	Implements the Scanlines shader. Attach to a camera.
+*/
+
+[RequireComponent (typeof (Camera))]
+[ExecuteInEditMode]
+public class Scanlines : MonoBehaviour
+{
+	public Material material;
+
+
+	// Postprocess the image
+	void OnRenderImage(RenderTexture source, RenderTexture destination)
+	{
+		Graphics.Blit(source, destination, material);
+	}
+}
