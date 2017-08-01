@@ -10,7 +10,8 @@ The project includes two shaders developed for the project:
  - A two-tone paint shader for space ship customization (PBR surface shader)
 
 **Notices:**
-Excepting the following, all content & code was created by me:
+
+Excepting the following, *all* content & code was created by me:
 - Skybox texture
 - UI visuals (I've use the standard Unity UI for now)
 - Imported Fonts
