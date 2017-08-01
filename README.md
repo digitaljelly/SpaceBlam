@@ -31,18 +31,21 @@ and add in some custom shaders (1x surface shader and 1x fragment shader).
 **Programming approach:**
 The main challenge was the tiling of elements as they go off-screen (toroidal-style).
 There were three possible approaches:
-1) Simple 
-	- as positions go outside screen bounds, snap to the opposite side
+1) Simple - as positions go outside screen bounds, snap to the opposite side
+	
 	*Issues:*
-	Horrible snapping - jarring and can move asteroids on top of other elements
+	
+	- Horrible snapping - jarring and can move asteroids on top of other elements
 2) Fully dynamic - instantiates/destroyes as game objects join/left the scene
+	
 	*Issues:*
 	- Complicated - need to work out where objects are leaving/entering the scene
     and work out when and where to instantiate duplicates.
     - Tracking everything in a performant manner.
 
 3) Pre-tiles - 9 copies of each object
-*Issues:*
+	
+	*Issues:*
     - Least performant option.
     - Makes instantiating new asteroids complex
 
