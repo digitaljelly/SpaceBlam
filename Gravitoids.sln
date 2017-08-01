@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{932941D3-73A2-040D-056B-50C17B3F5D22}") = "Gravitoids", "Assembly-CSharp-firstpass.csproj", "{54FC3DEE-6F42-389E-C720-CA04B7509954}"
+EndProject
+Project("{932941D3-73A2-040D-056B-50C17B3F5D22}") = "Gravitoids", "Assembly-CSharp.csproj", "{B90A2CB2-F013-8EFF-E044-0593853ADC3A}"
+EndProject
+Project("{932941D3-73A2-040D-056B-50C17B3F5D22}") = "Gravitoids", "Assembly-CSharp-Editor.csproj", "{17C14701-393A-2297-941E-47E82E9F02D7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54FC3DEE-6F42-389E-C720-CA04B7509954}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54FC3DEE-6F42-389E-C720-CA04B7509954}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54FC3DEE-6F42-389E-C720-CA04B7509954}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54FC3DEE-6F42-389E-C720-CA04B7509954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B90A2CB2-F013-8EFF-E044-0593853ADC3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B90A2CB2-F013-8EFF-E044-0593853ADC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B90A2CB2-F013-8EFF-E044-0593853ADC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B90A2CB2-F013-8EFF-E044-0593853ADC3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17C14701-393A-2297-941E-47E82E9F02D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17C14701-393A-2297-941E-47E82E9F02D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17C14701-393A-2297-941E-47E82E9F02D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17C14701-393A-2297-941E-47E82E9F02D7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

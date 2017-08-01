@@ -1,0 +1,42 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Asteroids\Asteroid.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Asteroids\AsteroidShields.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Asteroids\AsteroidSpawn.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Asteroids\IncomingAsteroid.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Audio\AudioPlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Audio\BGMusicControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Audio\PlayerSounds.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Audio\UIButtonSounds.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Customization\Customize.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Game States\GameState.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Game States\InitScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Game States\MainGameStart.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Interfaces\IKilllable.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Interfaces\ITakeDamage.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Laser Beams\LaserBeam.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player Input\Death.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player Input\FireShots.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Player Input\SpaceShipMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Scene Management\SceneControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Scene Management\SceneLoader.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Scoring\ScoreControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Screen Edge Tiling\CentreCollision.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Screen Edge Tiling\EdgeCollisionDetection.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Screen Edge Tiling\ObjectTilingCtrl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Screen Edge Tiling\ScreenTilingCtrl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Shaders\Scanlines.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UI\GameUIControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UI\LoadingProTips.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UI\PauseControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\UI\SelectOnAwake.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\SpaceBlamSettings.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Asteroids\Asteroid.cs" Line="140" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
